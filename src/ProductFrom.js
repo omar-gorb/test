@@ -16,14 +16,14 @@ class ProductForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.saveProduct(this.state.product).then( () => {
-            this.setState = {
+            this.setState({
                 product : {
                     name : '',
                     category: '',
                     price: '',
                     stocked: true,
                 }
-            };  
+            });  
         });
       
         console.log('handlee submit',this.state.product);

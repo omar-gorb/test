@@ -1,4 +1,5 @@
 import React from 'react';
+import './ProductRow.css'
 
 class ProductRow extends React.Component {
 
@@ -8,7 +9,7 @@ class ProductRow extends React.Component {
 
     render(){
         return (
-            <tr key={this.props.product.id}>
+            <tr key={this.props.product.id} className={this.props.product.stocked ? 'stocked': 'hors-stocked'}>
                 <td>{this.props.product.name}</td>
                 <td>{this.props.product.category}</td>
                 <td>${this.props.product.price}</td>

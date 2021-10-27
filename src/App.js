@@ -45,7 +45,7 @@ class App extends React.Component {
 
   render(){
     return (
-      <div className="App">
+      <div>
         <Filter></Filter>
         <ProductTable products={this.state.products}
                       deleteProduct={this.deleteProduct}></ProductTable>
