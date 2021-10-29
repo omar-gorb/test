@@ -15,7 +15,9 @@ class ProductForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.saveProduct(this.state.product).then( () => {
+        let promise= this.props.saveProduct(this.state.product)
+        console.log(promise);
+        promise.then( () => {
             this.setState({
                 product : {
                     name : '',

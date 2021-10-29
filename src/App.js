@@ -24,15 +24,21 @@ class App extends React.Component {
     .then(json => this.setState({products: json}))
   }
 
-  saveProduct = async(product) => {
-      console.log("save product", product);
-      fetch('http://127.0.0.1:8000/products', {
+  saveProduct =  (product) => {
+      return fetch('http://127.0.0.1:8000/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(product)       
-      }).then( () => this.loadProducts());      
+      }).then( (response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not OK');
+        }  
+      }).then( () => this.loadProducts())
+      .catch( (e) => {
+        return Promise.reject('Custom Error Object');
+      });      
   }
 
   deleteProduct = (productId) => {
