@@ -6,22 +6,25 @@ import ProductForm from './ProductFrom';
 import React from 'react';
 
 class App extends React.Component {
-
-  constructor(props){
-      super(props);
-      this.state = {
-          products : []
-      };
-  }
-
+  state = {
+    products : []
+  };
+  
   componentDidMount(){
     this.loadProducts();
   }
-
+ 
   loadProducts(){
     fetch('http://127.0.0.1:8000/products')
     .then(response => response.json())
+    .then(data => {
+      if (!data.test) {
+        return Promise.reject(new Error("dyuiop"));
+      }
+      return data;
+    })
     .then(json => this.setState({products: json}))
+    .catch(console.error);
   }
 
   saveProduct =  (product) => {
@@ -31,14 +34,7 @@ class App extends React.Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(product)       
-      }).then( (response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not OK');
-        }  
-      }).then( () => this.loadProducts())
-      .catch( (e) => {
-        return Promise.reject('Custom Error Object');
-      });      
+      }).then(response => response.json());
   }
 
   deleteProduct = (productId) => {
@@ -50,13 +46,13 @@ class App extends React.Component {
   }
 
   render(){
+    const { products } = this.state;
+
     return (
       <div>
         <Filter></Filter>
-        <ProductTable products={this.state.products}
-                      deleteProduct={this.deleteProduct}></ProductTable>
+        <ProductTable products={products} deleteProduct={this.deleteProduct}></ProductTable>
         <ProductForm saveProduct={this.saveProduct}></ProductForm>
-
       </div>
     );
     }
